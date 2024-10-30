@@ -11,9 +11,11 @@ const bodyParser = require('body-parser');
 const AuthRouter = require('./Routes/AuthRouter');
 const ProductRouter = require('./Routes/ProductRouter');
 
+const googleAuthRouter = require('./Routes/googleAuthRouter');
+
 // const auth = require("./Routes/auth");
 
-const PORT = 5000;
+const PORT = 3000;
 
 require('dotenv').config();
 
@@ -26,9 +28,14 @@ require('./Models/db');
 
 
 app.use(bodyParser.json());
-app.use(cors());
-app.use('/auth',AuthRouter);
+app.use(cors({
+    origin:"http://localhost:3001",
+    methods:["GET","POST","PUT","DELETE"],
+    credentials:true
+}));
+app.use('/authone',AuthRouter);
 app.use('/products',ProductRouter);
+app.use('/',googleAuthRouter);
 
 
 

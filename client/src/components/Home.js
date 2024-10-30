@@ -27,7 +27,7 @@ function Home(){
     const fetchProducts = async () =>{
 
         try{
-            const url = "http://localhost:5000/products";
+            const url = "http://localhost:3000/products";
             
             const headers = {
                 headers:{

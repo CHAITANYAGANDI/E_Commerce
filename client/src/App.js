@@ -5,6 +5,7 @@ import Signup from "./components/Signup"; // Import the Register component
 import Home from "./components/Home"; // Sample protected component
 import { useState } from 'react';
 import RefreshHandler from './RefreshHandler';
+import GoogleCallback from './components/GoogleCallBack'; 
 
 
 function App() {
@@ -23,7 +24,9 @@ function App() {
                 <Route path="/" element={<Navigate to="/login"/>} />
                 <Route path="/login" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
+                
                 <Route path="/home" element={< PrivateRoute element={<Home/>} />} />
+                <Route path="/auth/google/callback" element={<GoogleCallback />} />
             </Routes>
      
         </div>

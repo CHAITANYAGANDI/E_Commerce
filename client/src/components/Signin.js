@@ -10,6 +10,7 @@ function Login(){
     })
 
     const navigate = useNavigate();
+    
     const handleChange = (e)=>{
         const {name,value} = e.target;
         console.log(name,value);
@@ -28,7 +29,7 @@ function Login(){
         }
 
         try{
-            const url = "http://localhost:5000/auth/login";
+            const url = "http://localhost:3000/auth/login";
 
             const response = await fetch(url,{
                 method: "POST",
@@ -61,13 +62,32 @@ function Login(){
             handleError(err);
         }
     }
+
+    const handleGoogleLogin = async () => {
+        try {
+            window.open("http://localhost:3000/auth/google","_self")
+
+            const url = "http://localhost:3000/auth/google/callback";
+
+            const response = await fetch(url,{
+                method: "GET"
+            });
+
+            const result = await response.json();
+
+            console.log(result);
+        } catch (err) {
+            handleError('Error during Google login process');
+            console.error(err);
+        }
+    };
+    
     return (
         <div className='container'>
             <h1>
                 Login
             </h1>
             <form onSubmit={handleLogin}>
-         
                 <div>
                     <label htmlFor='email'>
                         Email
@@ -92,14 +112,18 @@ function Login(){
                     placeholder='Enter your password'
                     value={loginInfo.password}/>
                 </div>
-                <button type = 'submit'>Sign In</button>
+                <button type='submit'>Sign In</button>
                 <span>Don't have an account ?
                     <Link to="/signup">Register</Link>
                 </span>
             </form>
+            {/* Google Sign-In Button */}
+            <button onClick={handleGoogleLogin} style={{ marginTop: '20px' }}>
+                Sign in with Google
+            </button>
             <ToastContainer/>
         </div>
     )
 }
 
-export default Login 
+export default Login
