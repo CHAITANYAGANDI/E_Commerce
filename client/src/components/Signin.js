@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect,useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {ToastContainer} from 'react-toastify'
 import { handleError, handleSuccess } from '../utils'
@@ -62,25 +62,6 @@ function Login(){
             handleError(err);
         }
     }
-
-    const handleGoogleLogin = async () => {
-        try {
-            window.open("http://localhost:3000/auth/google","_self")
-
-            const url = "http://localhost:3000/auth/google/callback";
-
-            const response = await fetch(url,{
-                method: "GET"
-            });
-
-            const result = await response.json();
-
-            console.log(result);
-        } catch (err) {
-            handleError('Error during Google login process');
-            console.error(err);
-        }
-    };
     
     return (
         <div className='container'>
@@ -118,9 +99,16 @@ function Login(){
                 </span>
             </form>
             {/* Google Sign-In Button */}
-            <button onClick={handleGoogleLogin} style={{ marginTop: '20px' }}>
+            {/* <button onClick={handleGoogleLogin} style={{ marginTop: '20px' }}>
                 Sign in with Google
-            </button>
+            </button> */}
+            <form action="http://localhost:3000/auth/google" method="GET">
+                <input 
+                    type="submit" 
+                    value="Sign in with Google" 
+                    style={{ marginTop: '20px' }}
+                />
+            </form>
             <ToastContainer/>
         </div>
     )

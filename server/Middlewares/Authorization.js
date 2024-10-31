@@ -4,26 +4,39 @@ const ensureAuthenticated = (req,res,next)=>{
 
     const auth = req.headers['authorization'];
 
-    if(!auth){
-        return res.status(403).json({message:'Unauthorized'});
+    if(auth=='null'){
+
+
+        return next(new Error('Unauthorized'));
+        // res.status(403).json({message:'Unauthorized'});
     }
 
-    try{
+    else{
 
-        const decoded = jwt.verify(auth,process.env.JWT_SECRET);
+        try{
 
-        req.user = decoded;
+            const decoded = jwt.verify(auth,process.env.JWT_SECRET);
+    
+            req.user = decoded;
+    
+            console.log(req.user);
+    
+            next();
+    
+    
+        }catch(err){
+    
+  
+            next(new Error('TOKEN IS EXPIRED'));
+            // return res.status(403).json({
+            //     message:'TOKEN IS EXPIRED'
+            // })
+        }
 
-        console.log(req.user);
-
-        next();
-
-
-    }catch(err){
-        return res.status(403).json({
-            message:'TOKEN IS EXPIRED'
-        })
     }
+    
+
+
 };
 
 module.exports = ensureAuthenticated;

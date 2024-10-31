@@ -17,6 +17,7 @@ function Home(){
 
     const handleLogout = (e) => {
         localStorage.removeItem('token');
+        localStorage.removeItem('googleAccessToken');
         localStorage.removeItem('loggedInUser');
         handleSuccess('logged out successfully');
         setTimeout(()=>{
@@ -28,12 +29,23 @@ function Home(){
 
         try{
             const url = "http://localhost:3000/products";
+            const googleAccessToken = localStorage.getItem('googleAccessToken');
             
             const headers = {
                 headers:{
                     'Authorization':localStorage.getItem('token')
                 }
             }
+
+            if (googleAccessToken) {
+                headers.headers['Google_Access_Token'] = googleAccessToken;
+
+
+            }
+
+            console.log(googleAccessToken,'Access token from home page');
+
+            console.log(headers);
             const response = await fetch(url,headers);
 
             const result = await response.json();
@@ -44,6 +56,7 @@ function Home(){
             handleError(err);
         }
     }
+
 
     useEffect(()=>{
         fetchProducts();

@@ -11,7 +11,7 @@ function RefreshHanlder ({setIsAuthenticated}){
 
 
     useEffect(()=>{
-        if(localStorage.getItem('token')){
+        if(localStorage.getItem('token')||localStorage.getItem('googleAccessToken')){
             setIsAuthenticated(true);
 
             if(location.pathname === '/'||location.pathname === '/login'||location.pathname=== '/signup'){

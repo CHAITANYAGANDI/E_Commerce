@@ -24,7 +24,6 @@ function App() {
                 <Route path="/" element={<Navigate to="/login"/>} />
                 <Route path="/login" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
-                
                 <Route path="/home" element={< PrivateRoute element={<Home/>} />} />
                 <Route path="/auth/google/callback" element={<GoogleCallback />} />
             </Routes>

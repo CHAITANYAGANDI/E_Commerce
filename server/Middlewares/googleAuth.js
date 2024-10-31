@@ -22,7 +22,10 @@ async function getGoogleUser(code) {
     const userResponse = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
     headers: { Authorization: `Bearer ${accessToken}` }
     });
-    return userResponse.data;
+    return {
+      accessToken: accessToken,
+      user: userResponse.data
+  };
 }
 
 module.exports = {
