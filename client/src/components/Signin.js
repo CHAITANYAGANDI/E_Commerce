@@ -42,13 +42,14 @@ function Login(){
             const result = await response.json();
 
             console.log(result);
-            const {success, message, jwtToken,name,error} = result;
+            const {success, message, jwtToken,name,email, error} = result;
             if (success){
                 handleSuccess(message);
                 localStorage.setItem('token',jwtToken);
                 localStorage.setItem('loggedInUser',name);
+                localStorage.setItem('currentUserEmail',email);
                 setTimeout(()=>{
-                    navigate('/home')
+                    navigate('/mfauth')
                 },1000)
             }else if (error){
                 const details = error?.details[0].message;
@@ -96,6 +97,11 @@ function Login(){
                 <button type='submit'>Sign In</button>
                 <span>Don't have an account ?
                     <Link to="/signup">Register</Link>
+                </span>
+                <span>
+                    <Link to="/forgotpassword" style={{ marginTop: '10px', display: 'block' }}>
+                        Forgot Password?
+                    </Link>
                 </span>
             </form>
             {/* Google Sign-In Button */}

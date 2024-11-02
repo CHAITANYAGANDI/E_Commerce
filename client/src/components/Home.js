@@ -18,6 +18,8 @@ function Home(){
     const handleLogout = (e) => {
         localStorage.removeItem('token');
         localStorage.removeItem('googleAccessToken');
+        localStorage.removeItem('currentUserEmail');
+        localStorage.removeItem('otpVerificationStatus');
         localStorage.removeItem('loggedInUser');
         handleSuccess('logged out successfully');
         setTimeout(()=>{
@@ -30,6 +32,7 @@ function Home(){
         try{
             const url = "http://localhost:3000/products";
             const googleAccessToken = localStorage.getItem('googleAccessToken');
+            const otpVerificationStatus = localStorage.getItem('otpVerificationStatus');
             
             const headers = {
                 headers:{
@@ -40,13 +43,17 @@ function Home(){
             if (googleAccessToken) {
                 headers.headers['Google_Access_Token'] = googleAccessToken;
 
-
             }
 
-            console.log(googleAccessToken,'Access token from home page');
-
-            console.log(headers);
-            const response = await fetch(url,headers);
+            if (otpVerificationStatus) {
+                headers.headers['OTP_Verification_Status'] = otpVerificationStatus;
+            }
+            
+            console.log(headers,'data coming from the home page from the client'); // Check that headers contain the right values
+            
+            // Make the fetch request with the updated headers
+            const response = await fetch(url, headers
+             );
 
             const result = await response.json();
             console.log(result);

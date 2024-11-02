@@ -12,6 +12,9 @@ const ProductRouter = require('./Routes/ProductRouter');
 const googleAuthRouter = require('./Routes/googleAuthRouter');
 
 
+const passwordResetRouter = require('./Routes/PasswordResetRouter');
+
+
 const PORT = 3000;
 
 require('dotenv').config();
@@ -29,9 +32,10 @@ app.use(cors({
     credentials:true
 }));
 
+app.use('/',googleAuthRouter);
 app.use('/auth',AuthRouter);
 app.use('/products',ProductRouter);
-app.use('/',googleAuthRouter);
+app.use('/recovery',passwordResetRouter);
 
 
 app.listen(PORT,()=> {

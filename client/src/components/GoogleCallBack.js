@@ -26,7 +26,7 @@ function GoogleAuthCallback() {
             console.error('No access token found');
           }
 
-        //   console.log(data.accessToken);
+
           console.log('authenticated successfully');
 
         } else {

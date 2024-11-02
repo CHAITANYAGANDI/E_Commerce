@@ -4,6 +4,8 @@ const ensureAuthenticated = (req,res,next)=>{
 
     const auth = req.headers['authorization'];
 
+    console.log(req.headers);
+
     if(auth=='null'){
 
 
