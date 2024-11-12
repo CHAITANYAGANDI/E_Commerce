@@ -2,8 +2,12 @@
 .env
 client/.env
 server/.env
+Auth/.env
+ClientServer/.env
 
 # Ignore node_modules folders
 node_modules/
 client/node_modules/
 server/node_modules/
+Auth/node_modules/
+ClientServer/node_modules/

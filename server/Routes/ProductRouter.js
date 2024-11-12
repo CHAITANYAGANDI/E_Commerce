@@ -49,8 +49,10 @@ const ensureOtpVerified = (req,res,next) =>{
 router.get('/',ensureEitherAuthenticated,ensureOtpVerified,(req,res)=>{
 
     res.status(200).json([
-        {name:"mobile",
-        price:10000},
+        {
+            name:"mobile",
+            price:10000
+        },
         {
             name:'tv',
             price:20000
@@ -59,6 +61,24 @@ router.get('/',ensureEitherAuthenticated,ensureOtpVerified,(req,res)=>{
     ])
 
 });
+
+
+
+// router.get('/',ensureEitherAuthenticated,(req,res)=>{
+
+//     res.status(200).json([
+//         {
+//             name:"mobile",
+//             price:10000
+//         },
+//         {
+//             name:'tv',
+//             price:20000
+//         }
+
+//     ])
+
+// });
 
 
 module.exports = router;

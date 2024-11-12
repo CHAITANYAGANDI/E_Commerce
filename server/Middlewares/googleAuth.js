@@ -4,7 +4,8 @@ require('dotenv').config()
 
 function getGoogleAuthURL() {
     const redirectUri = 'http://localhost:3000/auth/google/callback';
-    return `https://accounts.google.com/o/oauth2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}&scope=openid%20email%20profile&response_type=code`;
+    return `https://accounts.google.com/o/oauth2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${redirectUri}
+    &scope=openid%20email%20profile&response_type=code`;
   }
 
 async function getGoogleUser(code) {

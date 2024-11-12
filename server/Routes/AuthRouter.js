@@ -10,7 +10,6 @@ router.post('/login',loginvalidation,login);
 
 router.post('/signup',signupValidation,signup);
 
-
 router.post('/verifyotp',verifyOtp);
 
 

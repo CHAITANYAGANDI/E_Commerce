@@ -17,7 +17,7 @@ const ensureAuthenticated = (req,res,next)=>{
 
         try{
 
-            const decoded = jwt.verify(auth,process.env.JWT_SECRET);
+            const decoded = jwt.verify(auth,process.env.PRODUCTS_SECRET);
     
             req.user = decoded;
     

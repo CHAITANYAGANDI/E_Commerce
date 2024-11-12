@@ -3,7 +3,6 @@ const router = express.Router();
 const {forgotPassword, resetPassword, verifyOtp} = require('../Services/forgotPassword');
 
 
-
 router.post('/forgotpassword',forgotPassword);
 
 router.post('/resetpassword',resetPassword);

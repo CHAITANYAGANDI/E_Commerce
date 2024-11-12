@@ -30,7 +30,7 @@ router.get('/auth/google/callback', async (req, res) => {
   });
 
 
-  router.get('/authenticate', (req,res)=>{
+router.get('/authenticate', (req,res)=>{
 
 
     const userDataCookie = req.cookies.userData;

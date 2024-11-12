@@ -30,8 +30,11 @@ function Home(){
     const fetchProducts = async () =>{
 
         try{
+            
             const url = "http://localhost:3000/products";
+
             const googleAccessToken = localStorage.getItem('googleAccessToken');
+            const clientAccessToken = localStorage.getItem('AccessToken');
             const otpVerificationStatus = localStorage.getItem('otpVerificationStatus');
             
             const headers = {
@@ -45,15 +48,18 @@ function Home(){
 
             }
 
+            if (clientAccessToken) {
+                headers.headers['Authorization'] = clientAccessToken;
+
+            }
+
             if (otpVerificationStatus) {
                 headers.headers['OTP_Verification_Status'] = otpVerificationStatus;
             }
             
-            console.log(headers,'data coming from the home page from the client'); // Check that headers contain the right values
+            console.log(headers,'data coming from the home page from the client');
             
-            // Make the fetch request with the updated headers
-            const response = await fetch(url, headers
-             );
+            const response = await fetch(url, headers);
 
             const result = await response.json();
             console.log(result);
