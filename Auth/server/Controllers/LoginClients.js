@@ -2,7 +2,7 @@ const loginClients = (req,res) => {
 
     try{
 
-        const {username,password} = req.body;
+        const {username} = req.body;
 
         const callbackUrl = `${req.cookies.callbackUrl}&username=${encodeURIComponent(username)}`;
     

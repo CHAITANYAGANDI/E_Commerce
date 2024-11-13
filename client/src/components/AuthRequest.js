@@ -49,7 +49,11 @@ function RequestAuthorization() {
 
         if (response.ok) {
 
-        const callbackUrl = encodeURIComponent(`http://localhost:3001/admin/client/callback?fromLogin=true&clientId=${clientId}&redirectUri=${redirectUri}`);
+        // const callbackUrl = encodeURIComponent(`http://localhost:3001/admin/client/callback?fromLogin=true&clientId=${clientId}&redirectUri=${redirectUri}`);
+
+        const callbackUrl = encodeURIComponent(`http://localhost:3001/admin/client/callback?fromLogin=true`);
+
+
         window.location.href = `http://localhost:5000/auth/client/login?callbackUrl=${callbackUrl}`;
         }
     };
