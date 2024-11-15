@@ -39,7 +39,7 @@ function RequestAuthorization() {
             return handleError('All fields are required');
         }
 
-        const response = await fetch('http://localhost:5001/admin/client/details', {
+        const response = await fetch('http://localhost:7000/api/admin/client/details', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,12 +49,10 @@ function RequestAuthorization() {
 
         if (response.ok) {
 
-        // const callbackUrl = encodeURIComponent(`http://localhost:3001/admin/client/callback?fromLogin=true&clientId=${clientId}&redirectUri=${redirectUri}`);
-
         const callbackUrl = encodeURIComponent(`http://localhost:3001/admin/client/callback?fromLogin=true`);
 
-
         window.location.href = `http://localhost:5000/auth/client/login?callbackUrl=${callbackUrl}`;
+
         }
     };
 

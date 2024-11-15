@@ -27,7 +27,7 @@ function AdminLogin() {
         }
 
         try {
-            const response = await fetch('http://localhost:5001/admin/login', {
+            const response = await fetch('http://localhost:7000/api/admin/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ function AdminLogin() {
                 setTimeout(() => navigate('/admin/dashboard'), 1000);
             } else if (error) {
 
-                console.log(error);
+
                 handleError(error.details[0].message);
             } else {
                 handleError(message);

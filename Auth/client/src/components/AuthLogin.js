@@ -44,7 +44,6 @@ function AuthLogin() {
                 setTimeout(() => navigate('/auth/dashboard'), 1000);
             } else if (error) {
 
-                console.log(error);
                 handleError(error.details[0].message);
             } else {
                 handleError(message);

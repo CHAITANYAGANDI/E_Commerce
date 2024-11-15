@@ -14,7 +14,7 @@ function VerifyOtp() {
         }
 
         try {
-            const url = "http://localhost:3000/recovery/verifyotp";
+            const url = "http://localhost:7000/api/user/recovery/verifyotp";
 
             const currentUser  = localStorage.getItem('currentUserEmail');
             const response = await fetch(url, {

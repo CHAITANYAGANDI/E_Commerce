@@ -31,7 +31,7 @@ function Home(){
 
         try{
             
-            const url = "http://localhost:3000/products";
+            const url = "http://localhost:7000/api/products";
 
             const googleAccessToken = localStorage.getItem('googleAccessToken');
             const clientAccessToken = localStorage.getItem('AccessToken');
@@ -57,12 +57,12 @@ function Home(){
                 headers.headers['OTP_Verification_Status'] = otpVerificationStatus;
             }
             
-            console.log(headers,'data coming from the home page from the client');
+    
             
             const response = await fetch(url, headers);
 
             const result = await response.json();
-            console.log(result);
+      
             setProducts(Array.isArray(result) ? result : result.products || []);
 
         }catch (err){

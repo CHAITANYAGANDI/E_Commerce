@@ -14,7 +14,7 @@ function ForgotPassword() {
         }
 
         try {
-            const url = "http://localhost:3000/recovery/forgotpassword";
+            const url = "http://localhost:7000/api/user/recovery/forgotpassword";
             const response = await fetch(url, {
                 method: "POST",
                 headers: {

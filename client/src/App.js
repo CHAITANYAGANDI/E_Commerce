@@ -10,7 +10,7 @@ import ForgotPassword from './components/ForgotPassword';
 import VerifyOtp from './components/VerifyOtp';
 import ResetPassword from './components/ResetPassword';
 import TwoFactorAuthentication from './components/twoFactorAuthentication';
-import ClientRegistration from "./components/ClientRegistration";
+// import ClientRegistration from "./components/ClientRegistration";
 import AdminLogin from "./components/AdminLogin";
 
 import AdminRegistration from "./components/AdminRegistration";
@@ -39,7 +39,6 @@ function App() {
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
                 <Route path="/verifyotp" element={<VerifyOtp />} />
                 <Route path="/resetpassword" element={<ResetPassword />} />
-                <Route path="/register" element={<ClientRegistration />} />
 
                 <Route path="/admin/register" element={<AdminRegistration />} />
                 <Route path="/admin/login" element={<AdminLogin />} />

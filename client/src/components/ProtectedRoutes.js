@@ -15,7 +15,7 @@ const CredentialsTable = () => {
 
     const fetchCredentials = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/admin/client/creds'); 
+        const response = await axios.get('http://localhost:7000/api/admin/client/creds'); 
         if (response.data.success) {
           setCredentials(response.data.data); 
         } else {

@@ -13,7 +13,7 @@ function Login(){
     
     const handleChange = (e)=>{
         const {name,value} = e.target;
-        console.log(name,value);
+ 
         const copyLoginInfo = { ...loginInfo };
         copyLoginInfo[name] = value;
         setloginInfo(copyLoginInfo);
@@ -29,7 +29,7 @@ function Login(){
         }
 
         try{
-            const url = "http://localhost:3000/auth/login";
+            const url = "http://localhost:7000/api/user/auth/login";
 
             const response = await fetch(url,{
                 method: "POST",
@@ -41,7 +41,7 @@ function Login(){
 
             const result = await response.json();
 
-            console.log(result);
+        
             const {success, message, jwtToken,name,email, error} = result;
             if (success){
                 handleSuccess(message);
@@ -58,7 +58,7 @@ function Login(){
             else if(!success){
                 handleError(message);
             }
-            console.log(result);
+         
         } catch(err){
             handleError(err);
         }
@@ -108,7 +108,7 @@ function Login(){
             {/* <button onClick={handleGoogleLogin} style={{ marginTop: '20px' }}>
                 Sign in with Google
             </button> */}
-            <form action="http://localhost:3000/auth/google" method="GET">
+            <form action="http://localhost:7000/api/user/auth/google" method="GET">
                 <input 
                     type="submit" 
                     value="Sign in with Google" 

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const AdminRouter = require('./Routes/AdminRouter');
 
-const PORT = 5001;
+const PORT = 7002;
 
 require('dotenv').config();
 require('./Models/dbConnection');
@@ -20,7 +20,7 @@ app.use(cors({
 }));
 
 
-app.use('/admin',AdminRouter);
+app.use('/',AdminRouter);
 
 
 app.listen(PORT,()=> {

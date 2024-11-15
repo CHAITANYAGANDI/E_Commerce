@@ -1,10 +1,7 @@
-
 const nodemailer = require('nodemailer');
-
 const bcrypt = require('bcryptjs');
 const UserModel = require("../Models/User");
-
-const otpStore = new Map();
+const {getOtp,setOtp} = require('../Services/OtpService');
 
 
 const forgotPassword = async (req, res) => {
@@ -21,7 +18,7 @@ const forgotPassword = async (req, res) => {
     }
 
     const otp = Math.floor(1000 + Math.random() * 9000);
-    otpStore.set(email, otp);
+    setOtp(email, otp);
 
 
     const transporter = nodemailer.createTransport({
@@ -44,7 +41,6 @@ const forgotPassword = async (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
 
-            console.log(error);
             return res.status(500).json({
                 message: "Failed to send OTP email",
                 success: false
@@ -57,8 +53,7 @@ const forgotPassword = async (req, res) => {
                 success: true,
                 email
             });
-
-            setTimeout(() => otpStore.delete(email), 5 * 60 * 1000);
+            
         }
     });
 };
@@ -87,17 +82,14 @@ const resetPassword = async (req, res) => {
 const verifyOtp = async (req, res) => {
     const { currentUser, otp } = req.body;
 
-    const storedOtp = otpStore.get(currentUser);
+    const otpFromDb = await getOtp(currentUser);
 
-    console.log(storedOtp);
-    if (!storedOtp || storedOtp !== parseInt(otp, 10)) {
+    if (!otpFromDb || otpFromDb !== parseInt(otp, 10)) {
         return res.status(400).json({
             message: "Invalid or expired OTP",
             success: false
         });
     }
-
-    otpStore.delete(currentUser);
 
     res.status(200).json({
         message: "OTP verified successfully",

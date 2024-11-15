@@ -10,7 +10,7 @@ const ProductRouter = require('./Routes/ProductRouter');
 const googleAuthRouter = require('./Routes/googleAuthRouter');
 const passwordResetRouter = require('./Routes/PasswordResetRouter');
 
-const PORT = 3000;
+const PORT = 7001;
 
 require('dotenv').config();
 require('./Models/db');

@@ -29,11 +29,13 @@ const ensureEitherAuthenticated = (req, res, next) => {
 };
 
 
+
+
 const ensureOtpVerified = (req,res,next) =>{
 
     const otpStatus = req.headers['otp_verification_status'];
 
-    if (otpStatus === 'OTP verified successfully'){
+    if (otpStatus === 'OTP verified successfully' || req.headers['google_access_token']){
 
         next();
     }

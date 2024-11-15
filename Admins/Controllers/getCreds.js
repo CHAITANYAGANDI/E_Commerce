@@ -4,8 +4,7 @@ const getCreds = async (req, res) => {
     try {
   
         const creds = await CredsModel.find();
-
-        console.log(creds);
+        
         if (!creds.length) {
             return res.status(404).json({ success: false, message: 'No credentials found.' });
         }

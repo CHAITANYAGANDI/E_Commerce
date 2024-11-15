@@ -28,7 +28,7 @@ function AdminRegistration() {
         }
         
         try {
-            const response = await fetch('http://localhost:5001/admin/register', {
+            const response = await fetch('http://localhost:7000/api/admin/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

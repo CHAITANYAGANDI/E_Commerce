@@ -7,7 +7,7 @@ function GoogleAuthCallback() {
   useEffect(() => {
     async function fetchGoogleAuth() {
       try {
-        const response = await fetch('http://localhost:3000/authenticate', {
+        const response = await fetch('http://localhost:7000/api/user/authenticate', {
           method: 'GET',
           credentials: 'include',
         });
@@ -25,9 +25,6 @@ function GoogleAuthCallback() {
           else{
             console.error('No access token found');
           }
-
-
-          console.log('authenticated successfully');
 
         } else {
           console.error('Failed to authenticate');

@@ -13,7 +13,7 @@ function Signup(){
     const navigate = useNavigate();
     const handleChange = (e)=>{
         const {name,value} = e.target;
-        console.log(name,value);
+
         const copySignupInfo = { ...signupInfo };
         copySignupInfo[name] = value;
         setSignupInfo(copySignupInfo);
@@ -29,7 +29,7 @@ function Signup(){
         }
 
         try{
-            const url = "http://localhost:3000/auth/signup";
+            const url = "http://localhost:7000/api/user/auth/signup";
 
             const response = await fetch(url,{
                 method: "POST",
@@ -53,7 +53,7 @@ function Signup(){
             else if(!success){
                 handleError(message);
             }
-            console.log(result);
+
         } catch(err){
             handleError(err);
         }

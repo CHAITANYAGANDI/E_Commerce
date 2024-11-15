@@ -31,8 +31,6 @@ function AuthDashboard() {
 
                 const result = await response.json();
 
-                console.log(result);
-
                 if (result.success) {
                     setCredentials(result.credentials || []);
                 } else {

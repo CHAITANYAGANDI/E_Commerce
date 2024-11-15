@@ -23,7 +23,7 @@ function ClientCallBack() {
           username
         };
 
-        const response = await fetch('http://localhost:5001/admin/auth', {
+        const response = await fetch('http://localhost:7000/api/admin/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,7 +39,6 @@ function ClientCallBack() {
 
           navigate('/admin/dashboard');
 
-          console.log('authenticated successfully');
 
         } else {
           console.error('Failed to authenticate');

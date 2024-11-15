@@ -4,8 +4,6 @@ const ensureAuthenticated = (req,res,next)=>{
 
     const auth = req.headers['authorization'];
 
-    console.log(req.headers);
-
     if(auth=='null'){
 
 
@@ -17,11 +15,9 @@ const ensureAuthenticated = (req,res,next)=>{
 
         try{
 
-            const decoded = jwt.verify(auth,process.env.PRODUCTS_SECRET);
+            const decoded = jwt.verify(auth,process.env.JWT_SECRET);
     
             req.user = decoded;
-    
-            console.log(req.user);
     
             next();
     

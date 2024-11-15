@@ -1,0 +1,1 @@
+// have to implement the schema for the products

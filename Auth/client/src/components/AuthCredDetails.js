@@ -28,7 +28,7 @@ function CredentialDetails() {
         const fetchCredentialDetails = async () => {
             try {
 
-                console.log(id);
+        
                 const response = await fetch(`http://localhost:5000/auth/creds/apiinfo/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',

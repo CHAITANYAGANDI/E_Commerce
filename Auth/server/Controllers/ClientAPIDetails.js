@@ -8,7 +8,6 @@ const getAPIDetails = async (req, res) => {
 
         const credential = await CredentialModel.findById(id);
 
-        console.log(credential);
         if (!credential) {
             return res.status(404).json({
                 success: false,

@@ -19,7 +19,7 @@ function ResetPassword() {
         }
 
         try {
-            const url = "http://localhost:3000/recovery/resetpassword";
+            const url = "http://localhost:7000/api/user/recovery/resetpassword";
             const email  = localStorage.getItem('currentUserEmail');
             const response = await fetch(url, {
                 method: "POST",
