@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const credsSchema = new Schema({
-
+    
+    client_id: {
+        type: String,
+        required: true,
+        unique: true
+    },
     api_name: {
         type: String,
         required: true,

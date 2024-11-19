@@ -3,6 +3,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import Home from "./components/Home"; 
+// import Home from "./components/HomeOriginal"; 
+
 import { useState } from 'react';
 import RefreshHandler from './RefreshHandler';
 import GoogleCallback from './components/GoogleCallBack'; 
@@ -51,13 +53,16 @@ function App() {
             </Routes>
 
 
-            <RefreshHandler setIsAuthenticated={setIsAuthenticated} />
+            {/* <RefreshHandler setIsAuthenticated={setIsAuthenticated} /> */}
             <Routes>
                 <Route path="/" element={<Navigate to="/login"/>} />
+
+                <Route path="/home" element={<Home />} />
+
                 <Route path="/login" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
 
-                <Route path="/home" element={< PrivateRoute element={<Home/>} />} />
+                {/* <Route path="/home" element={< PrivateRoute element={<Home/>} />} /> */}
                 <Route path="/auth/google/callback" element={<GoogleCallback />} />
                 <Route path="/mfauth" element={<TwoFactorAuthentication />} />
             </Routes>

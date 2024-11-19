@@ -15,7 +15,7 @@ const auth = async (req,res) =>{
             try {
                
                 const existingCred = await CredsModel.findOne({ api_name: cred.api_name });
-        
+                
                 if (existingCred) {
                     
                     existingCred.access_token = accessToken;
@@ -23,21 +23,26 @@ const auth = async (req,res) =>{
                 } else {
                     
                     const newCreds = new CredsModel({
+                        client_id: cred.client_id,
                         api_name: cred.api_name,
                         api_url: cred.api_url,
                         access_token: accessToken
                     });
                     await newCreds.save();
                 }
+
+
             } catch (error) {
                 console.error('Error processing credentials:', error);
             }
         });
 
+  
+
         res.status(200).json({
             success: true,
-            message: 'Access token received successfully',
-            access_token:accessToken
+            message: 'Access token received successfully'
+
         });
 
     }catch(err){

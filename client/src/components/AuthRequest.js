@@ -51,7 +51,7 @@ function RequestAuthorization() {
 
         const callbackUrl = encodeURIComponent(`http://localhost:3001/admin/client/callback?fromLogin=true`);
 
-        window.location.href = `http://localhost:5000/auth/client/login?callbackUrl=${callbackUrl}`;
+        window.location.href = `http://localhost:5000/auth/client/login?callbackUrl=${callbackUrl}&client_id=${encodeURIComponent(clientId)}`;
 
         }
     };

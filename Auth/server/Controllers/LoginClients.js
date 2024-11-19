@@ -4,7 +4,7 @@ const loginClients = (req,res) => {
 
         const {username} = req.body;
 
-        const callbackUrl = `${req.cookies.callbackUrl}&username=${encodeURIComponent(username)}`;
+        const callbackUrl = `${req.cookies.callbackUrl}&username=${encodeURIComponent(username)}&client_id=${encodeURIComponent(req.cookies.client_id)}`;
     
         return res.redirect(callbackUrl);
 

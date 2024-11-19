@@ -24,14 +24,16 @@ const clientAuthorization = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Invalid client credentials' });
         }
 
-        const token = jwt.sign({ client_id: creds.client_id }, creds[0].secret_key, { expiresIn: '30d' });
+        
+
+        const token = jwt.sign({ client_name:client.name, client_id: creds[0].client_id, api_url: creds[0].api_url,api_name: creds[0].api_name }, creds[0].secret_key, { expiresIn: '30d' });
 
         const callback_response = await axios.post(redirectUri,{creds:creds,accessToken:token});
 
         res.status(200).json({
             success: callback_response.data.success,
-            message:callback_response.data.message,
-            AccessToken:callback_response.data.access_token
+            message:callback_response.data.message
+ 
         });
 
     } catch (error) {

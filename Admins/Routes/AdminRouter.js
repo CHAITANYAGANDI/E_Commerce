@@ -17,6 +17,9 @@ const getCreds = require('../Controllers/getCreds');
 
 const clientData = require('../Controllers/clientData');
 
+const token = require('../Controllers/token');
+
+
 
 
 
@@ -31,6 +34,9 @@ router.get('/client/creds',getCreds);
 router.post('/auth/callback',auth);
 
 router.post('/client/details',clientData);
+
+router.get('/token',token);
+
 
 
 module.exports = router;

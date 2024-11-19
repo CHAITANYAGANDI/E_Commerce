@@ -37,8 +37,7 @@ const authenticate=  async(req,res) =>{
 
         res.status(200).json({
             success:response.data.success,
-            message:response.data.message,
-            AccessToken:response.data.AccessToken
+            message:response.data.message
         });
 
 

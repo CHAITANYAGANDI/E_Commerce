@@ -1,8 +1,11 @@
+
+
+
 const jwt = require('jsonwebtoken');
 
 const ensureAuthenticated = (req,res,next)=>{
 
-    const auth = req.headers['productsauthorization'];
+    const auth = req.headers['inventoryauthorization'];
 
     if(auth=='null'){
 
@@ -15,16 +18,11 @@ const ensureAuthenticated = (req,res,next)=>{
 
         try{
 
-            const decoded = jwt.verify(auth,process.env.PRODUCTS_SECRET);
+            const decoded = jwt.verify(auth,process.env.INVENTORY_SECRET);
     
-            req.products = decoded;
+            req.inventory = decoded;
 
-            // const originalUrl = req.headers['x-original-url'];
-            // console.log('Gateway URL:', originalUrl); // This will show http://localhost:7000/api/products/get
-
-            // // If you still need the internal URL for some reason
-            // const internalUrl = `${req.protocol}://${req.get('host')}${req.url}`;
-            // console.log('Internal URL:', internalUrl); // This will show http://localhost:7003/get
+            console.log(decoded);
 
             const originalUrl = req.headers['x-original-url'];
 

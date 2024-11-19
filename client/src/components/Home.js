@@ -1,98 +1,77 @@
-import React, {useEffect,useState} from 'react'
-
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleError, handleSuccess } from '../utils';
+import '../Home.css';
+function Home() {
+  const [loggedInuser, setLoggedInUser] = useState('');
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
-function Home(){
+  useEffect(() => {
+    setLoggedInUser(localStorage.getItem('loggedInUser'));
+  }, []);
 
-    const [loggedInuser, setLoggedInUser] = useState('');
-    const [products, setProducts] = useState([]);
-    const navigate = useNavigate();
+  const handleLogout = (e) => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('googleAccessToken');
+    localStorage.removeItem('currentUserEmail');
+    localStorage.removeItem('otpVerificationStatus');
+    localStorage.removeItem('loggedInUser');
+    handleSuccess('Logged out successfully');
+    setTimeout(() => {
+      navigate('/login');
+    }, 1000);
+  };
 
+  const fetchProducts = async () => {
+    try {
+      const url = "http://localhost:7000/api/products/get";  // Ensure correct API URL
 
-    useEffect(()=>{
-        setLoggedInUser(localStorage.getItem('loggedInUser'));
-    },[])
+      const headers = {
+        headers: {
+          'ProductsAuthorization': localStorage.getItem('ProductsAccessToken'),
+          'InventoryAuthorization': localStorage.getItem('InventoryAccessToken'),
+        },
+      };
 
-
-    const handleLogout = (e) => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('googleAccessToken');
-        localStorage.removeItem('currentUserEmail');
-        localStorage.removeItem('otpVerificationStatus');
-        localStorage.removeItem('loggedInUser');
-        handleSuccess('logged out successfully');
-        setTimeout(()=>{
-            navigate('/login');
-        },1000)
-    }
-
-    const fetchProducts = async () =>{
-
-        try{
-            
-            const url = "http://localhost:7000/api/products";
-
-            const googleAccessToken = localStorage.getItem('googleAccessToken');
-            const clientAccessToken = localStorage.getItem('AccessToken');
-            const otpVerificationStatus = localStorage.getItem('otpVerificationStatus');
-            
-            const headers = {
-                headers:{
-                    'Authorization':localStorage.getItem('token')
-                }
-            }
-
-            if (googleAccessToken) {
-                headers.headers['Google_Access_Token'] = googleAccessToken;
-
-            }
-
-            if (clientAccessToken) {
-                headers.headers['Authorization'] = clientAccessToken;
-
-            }
-
-            if (otpVerificationStatus) {
-                headers.headers['OTP_Verification_Status'] = otpVerificationStatus;
-            }
-            
-    
-            
-            const response = await fetch(url, headers);
-
-            const result = await response.json();
+      const response = await fetch(url,headers);
+      const result = await response.json();
       
-            setProducts(Array.isArray(result) ? result : result.products || []);
-
-        }catch (err){
-            handleError(err);
-        }
+      setProducts(Array.isArray(result) ? result : result.products || []);
+    } catch (err) {
+      handleError(err);
     }
+  };
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-    useEffect(()=>{
-        fetchProducts();
-    },[]);
+  return (
+    <div>
+      <h1>Welcome {loggedInuser}</h1>
+      
 
-    return (
-        <div>
-            <h1>
-               Welcome {loggedInuser}
-            </h1>
-
-            <button  onClick={handleLogout}>
-               Logout
-            </button>
-            <div>
-            {products.map((item, index) => (
-                    <ul key={index}>
-                        <span>{item.name} : {item.price}</span>
-                    </ul>
-                ))}
+      <div className="product-container">
+        {products.map((item, index) => (
+          <div key={index} className="product-card">
+            <img
+              src={item.imageUrl}
+              alt={item.name}
+              className="product-image"
+            />
+            <div className="product-details">
+              <h3>{item.name}</h3>
+              <p>{item.description}</p>
+              <p>${item.price}</p>
+              <p>{item.inStock ? 'In Stock' : 'Out of Stock'}</p>
             </div>
-        </div>
-    )
+          </div>
+        ))}
+      </div>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  );
 }
 
-export default Home
+export default Home;

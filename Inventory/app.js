@@ -3,10 +3,9 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const inventoryRoutes = require('./Routes/InventoryRoutes');
 
-const ProductRouter = require('./Routes/ProductRouter');
-
-const PORT = 7003;
+const PORT = 7004;
 
 require('dotenv').config();
 require('./Models/dbConnection');
@@ -17,11 +16,10 @@ app.use(cors({
     
     origin:"http://localhost:3001",
     methods:["GET","POST","PUT","DELETE"],
-    credentials:true,
-    exposedHeaders: ['x-original-url']
+    credentials:true
 }));
 
-app.use('/',ProductRouter);
+app.use('/', inventoryRoutes);
 
 
 app.listen(PORT,()=> {
