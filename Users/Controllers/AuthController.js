@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const UserModel = require("../Models/User");
 
 const {getOtp,setOtp} = require('../Services/OtpService');
+const sendMail = require('../Services/sendMail');
+
 
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
@@ -64,94 +66,40 @@ const login = async (req,res) => {
         const passwordComparison = await bcrypt.compare(password,user.password);
 
         if (!passwordComparison){
-            return res.status(403).json({message:errorMessage,success:false})
+            return res.status(403).json({message:errorMessage,success:false});
         }
 
-        const jwtToken = jwt.sign(
-            {
-                email:user.email,_id:user._id
-            },
+        const  emailSentResponse = await sendMail(email);
 
-            process.env.JWT_SECRET,
-            {
-                expiresIn:'1h'
-            }
-        )
+        if (emailSentResponse.success===true){
 
+            res.status(200).json({
+                message:"Access Granted",
+                success:true,
+                email,
+                name:user.name
+            });
+        }
 
-        const otp = Math.floor(1000 + Math.random() * 9000);
-        setOtp(email, otp);
+        else{
 
-
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.MAIL_ADDRESS,
-                pass: process.env.MAIL_PASSWORD
-            }
-    
-        });
-
-        const mailOptions = {
-            from: process.env.MAIL_ADDRESS,
-            to: email,
-            subject: 'Password Reset OTP',
-            text:`Your OTP for Two Factor Authentication to login to account is ${otp}. This OTP will expire in 5 minutes.`
-
-        };
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-
-
-                return res.status(500).json({
-                    message: "Failed to send OTP email",
-                    success: false
-                
-                });
-            }
-        });
-
-        res.status(200).json({
-            message:"Access Granted",
-            success:true,
-            jwtToken,
-            email,
-            name:user.name
-        })
+             res.status(500).json({
+                message: "Failed to send OTP email",
+                success: false
+            
+            });
+        }
 
     } catch(err){
 
         res.status(500).json({
             message:"Internal server error",
             success:false
-        })
+        });
     }
 }
 
-
-const verifyOtp = async (req, res, next) => {
-    const { currentUser, otp } = req.body;
-
-    const otpFromDb = await getOtp(currentUser);
-
-    if (!otpFromDb || otpFromDb !== parseInt(otp, 10)) {
-        return res.status(400).json({
-            message: "Invalid or expired OTP",
-            success: false
-        });
-    }
-
-    res.status(200).json({
-        message: "OTP verified successfully",
-        success: true
-    });
-
-    next();
-};
-
 module.exports = {
     signup,
-    login,
-    verifyOtp
+    login
 }

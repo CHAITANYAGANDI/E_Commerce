@@ -24,6 +24,11 @@ import AuthRequest from "./components/AuthRequest";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 
 import ClientCallBack from "./components/ClientCallBack";
+import ProductManagement from "./components/ProductManagement";
+import AddProducts from "./components/AddProducts";
+import ProductDetails from "./components/ProductDetails";
+
+
 
 
 function App() {
@@ -46,23 +51,29 @@ function App() {
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/auth" element={<AuthManagement />} />
+                <Route path="/admin/products" element={<ProductManagement />} />
+                <Route path="/admin/products/add" element={<AddProducts />} />
+
                 <Route path="/admin/auth/request" element={<AuthRequest />} />
                 <Route path="/admin/auth/protected" element={<ProtectedRoutes />} />
                 <Route path="/admin/client/callback" element={<ClientCallBack />} />
 
+                <Route path="/product/:productId" element={<ProductDetails />} />
+                <Route path="/home" element={<Home/>} />
+
             </Routes>
 
-
-            {/* <RefreshHandler setIsAuthenticated={setIsAuthenticated} /> */}
+            
+            <RefreshHandler setIsAuthenticated={setIsAuthenticated} />
             <Routes>
                 <Route path="/" element={<Navigate to="/login"/>} />
 
-                <Route path="/home" element={<Home />} />
+                {/* <Route path="/home" element={<Home />} /> */}
 
                 <Route path="/login" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
-
-                {/* <Route path="/home" element={< PrivateRoute element={<Home/>} />} /> */}
+                {/* <Route path="/product/:productId" element={<ProductDetails />} />
+                <Route path="/home" element={< PrivateRoute element={<Home/>} />} /> */}
                 <Route path="/auth/google/callback" element={<GoogleCallback />} />
                 <Route path="/mfauth" element={<TwoFactorAuthentication />} />
             </Routes>

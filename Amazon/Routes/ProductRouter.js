@@ -24,7 +24,7 @@ const router = express.Router();
 
 router.get('/get', ensureAuthenticated,getAllProductDetails);
 
-router.get('/:productId', getProductDetails);
+router.get('/:productId', ensureAuthenticated,getProductDetails);
 
 router.post('/add', ensureAuthenticated,postProductDetails);
 

@@ -49,9 +49,7 @@ function ClientCallBack() {
 
             const api_name = data.data.api_name;
 
-            // console.log(data.data.access_token,'data from token');
-
-            localStorage.setItem(api_name+'AccessToken',access_token);
+            localStorage.setItem(api_name+'_AccessToken',access_token);
 
             
             navigate('/admin/dashboard');

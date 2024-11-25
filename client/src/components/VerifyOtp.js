@@ -16,13 +16,13 @@ function VerifyOtp() {
         try {
             const url = "http://localhost:7000/api/user/recovery/verifyotp";
 
-            const currentUser  = localStorage.getItem('currentUserEmail');
+            const email  = localStorage.getItem('currentUserEmail');
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ currentUser, otp })
+                body: JSON.stringify({ otp })
             });
 
             const result = await response.json();

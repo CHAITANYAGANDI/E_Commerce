@@ -26,7 +26,7 @@ app.use('/api/admin', createProxyMiddleware({
  
 }));
 
-app.use('/api/products', createProxyMiddleware({
+app.use('/api/amazon/products', createProxyMiddleware({
     target: 'http://localhost:7003',
     changeOrigin: true,
     pathRewrite: { '^/api/products': '/' },
@@ -36,10 +36,13 @@ app.use('/api/products', createProxyMiddleware({
 
 }));
 
-app.use('/api/inventory', createProxyMiddleware({
-    target: 'http://localhost:7004',
+app.use('/api/walmart/products', createProxyMiddleware({
+    target: 'http://127.0.0.1:7004',
     changeOrigin: true,
-    pathRewrite: { '^/api/inventory': '/' },
+    pathRewrite: { '^/api/walmart/products': '/' },
+    onProxyReq: (proxyReq, req, res) => {
+        proxyReq.setHeader('x-original-url', req.headers['x-original-url']);
+    }
 
 }));
 

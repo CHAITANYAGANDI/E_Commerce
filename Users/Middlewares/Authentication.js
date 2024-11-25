@@ -1,8 +1,5 @@
-const ensureAuthenticated = require('../Middlewares/Authorization');
-const ensuregoogleAuthenticated = require('../Middlewares/googleAuthorization');
-const  {signup,login,verifyOtp} = require('../Controllers/AuthController');
-const express = require("express");
-const router = express.Router();
+const ensureAuthenticated = require('./Authorization');
+const ensuregoogleAuthenticated = require('./googleAuthorization');
 
 
 const ensureEitherAuthenticated = (req, res, next) => {
@@ -43,44 +40,8 @@ const ensureOtpVerified = (req,res,next) =>{
     else{
         return res.status(403).json({ message: 'Unauthorized: OTP is not correct' });
     }
-
-
     
 };
 
-router.get('/',ensureEitherAuthenticated,ensureOtpVerified,(req,res)=>{
 
-    res.status(200).json([
-        {
-            name:"mobile",
-            price:10000
-        },
-        {
-            name:'tv',
-            price:20000
-        }
-
-    ])
-
-});
-
-
-
-// router.get('/',ensureEitherAuthenticated,(req,res)=>{
-
-//     res.status(200).json([
-//         {
-//             name:"mobile",
-//             price:10000
-//         },
-//         {
-//             name:'tv',
-//             price:20000
-//         }
-
-//     ])
-
-// });
-
-
-module.exports = router;
+module.exports = {ensureEitherAuthenticated,ensureOtpVerified};

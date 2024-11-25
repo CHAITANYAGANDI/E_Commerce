@@ -34,7 +34,7 @@ const forgotPassword = async (req, res) => {
         from: process.env.MAIL_ADDRESS,
         to: email,
         subject: 'Password Reset OTP',
-        text:`Your OTP for password reset is ${otp}. This OTP will expire in 5 minutes.`
+        text:`Your OTP for password reset is ${otp}. This OTP will expire in 2 minutes.`
 
     };
 

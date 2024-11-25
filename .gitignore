@@ -1,13 +1,27 @@
+# Ignore Python bytecode and pycache folders
+__pycache__/
+*.pyc
+
+# Ignore requirements.txt file
+requirements.txt
+
+
 # Ignore environment variable files
 .env
-client/.env
-server/.env
+Admins/.env
+Amazon/.env
 Auth/.env
-ClientServer/.env
+client/.env
+Users/.env
+Walmart/.env
+
+
 
 # Ignore node_modules folders
 node_modules/
-client/node_modules/
-server/node_modules/
+APIGateway/node_modules/
+Admins/node_modules/
+Amazon/node_modules/
 Auth/node_modules/
-ClientServer/node_modules/
+client/node_modules/
+Users/node_modules/

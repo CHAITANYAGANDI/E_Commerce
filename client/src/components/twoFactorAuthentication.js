@@ -16,13 +16,13 @@ function VerifyOtp() {
         try {
             const url = "http://localhost:7000/api/user/auth/verifyotp";
 
-            const currentUser  = localStorage.getItem('currentUserEmail');
+            const email  = localStorage.getItem('currentUserEmail');
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ currentUser, otp })
+                body: JSON.stringify({ email, otp })
             });
 
             const result = await response.json();
@@ -30,6 +30,7 @@ function VerifyOtp() {
                 handleSuccess(result.message);
 
                 localStorage.setItem("otpVerificationStatus",result.message);
+                localStorage.setItem("UserToken",result.jwtToken);
                 setTimeout(() => navigate('/home'), 1000);
             } else {
                 handleError(result.message);

@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 
 const AuthRouter = require('./Routes/AuthRouter');
-const ProductRouter = require('./Routes/ProductRouter');
+const ProductRouter = require('./Middlewares/Authentication');
 const googleAuthRouter = require('./Routes/googleAuthRouter');
 const passwordResetRouter = require('./Routes/PasswordResetRouter');
 
@@ -27,7 +27,7 @@ app.use(cors({
 
 app.use('/',googleAuthRouter);
 app.use('/auth',AuthRouter);
-app.use('/products',ProductRouter);
+// app.use('/products',ProductRouter);
 app.use('/recovery',passwordResetRouter);
 
 
