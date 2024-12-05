@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import token from '../../../Admins/Controllers/token';
 
 function ClientCallBack() {
   const navigate = useNavigate();
@@ -24,20 +23,22 @@ function ClientCallBack() {
           username
         };
 
-        const response = await fetch('http://localhost:7000/api/admin/auth', {
+        const response = await fetch('http://localhost:7000/api/user/admin/auth', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('AdminToken'),
             },
             body: JSON.stringify(requestBody)
         });
 
         if (response.ok) {
 
-          const token_response = await fetch('http://localhost:7000/api/admin/token', {
+          const token_response = await fetch('http://localhost:7000/api/user/admin/token', {
             method: 'GET',
             headers: {
-                'client_id': clientId
+                'client_id': clientId,
+                'Authorization': localStorage.getItem('AdminToken'),
             }
            });
 
@@ -67,7 +68,6 @@ function ClientCallBack() {
     fetchClient();
   }, [navigate]);
 
-//   return <div>Authorizing...</div>;
 }
 
 export default ClientCallBack;

@@ -41,7 +41,6 @@ router.post('/token',verifyToken,clientAuthorization);
 
 router.post('/authorize',clientAuthorization);
 
-
 module.exports = router;
 
 

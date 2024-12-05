@@ -6,7 +6,7 @@ import '../AdminLogin.css';
 
 function AdminLogin() {
     const [loginInfo, setLoginInfo] = useState({
-        adminname: '',
+        adminId: '',
         password: ''
     });
 
@@ -20,14 +20,14 @@ function AdminLogin() {
     const handleAdminLogin = async (e) => {
         e.preventDefault();
 
-        const { adminname, password } = loginInfo;
+        const { adminId, password } = loginInfo;
 
-        if (!adminname || !password) {
+        if (!adminId || !password) {
             return handleError('Adminname and password are required');
         }
 
         try {
-            const response = await fetch('http://localhost:7000/api/admin/login', {
+            const response = await fetch('http://localhost:7000/api/user/admin/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -55,36 +55,44 @@ function AdminLogin() {
     };
 
     return (
-        <div className="login-container">
-            <h1>Login</h1>
-            <form onSubmit={handleAdminLogin} className="login-form">
-                <div className="form-group">
-                    <label htmlFor="adminname">Admin Name</label>
-                    <input
-                        type="text"
-                        name="adminname"
-                        placeholder="Enter your Admin Name"
-                        value={loginInfo.adminname}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        value={loginInfo.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit" className="login-button">Login</button>
-            </form>
-            <ToastContainer />
+        <div className="login-page">
+            <div className="welcome-message">
+                <h1>Welcome to Trendy Treasures Admin Portal</h1>
+                <p>Your secure gateway to managing operations efficiently.</p>
+            </div>
+    
+            <div className="login-container">
+                <h1>Admin Login</h1>
+                <form onSubmit={handleAdminLogin} className="login-form">
+                    <div className="form-group">
+                        <label htmlFor="adminId">Admin ID</label>
+                        <input
+                            type="text"
+                            name="adminId"
+                            placeholder="Enter your Admin ID"
+                            value={loginInfo.adminId}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            value={loginInfo.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="login-button">Login</button>
+                </form>
+                <ToastContainer />
+            </div>
         </div>
     );
+    
 }
 
 export default AdminLogin;

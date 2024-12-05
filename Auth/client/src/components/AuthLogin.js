@@ -55,6 +55,10 @@ function AuthLogin() {
 
     return (
         <div className="login-container">
+            <div className="welcome-message">
+                <h1>Welcome to the Authorization Server</h1>
+                <p>Your secure gateway to accessing and managing resources.</p>
+            </div>
             <h1>Login</h1>
             <form onSubmit={handleAuthLogin} className="login-form">
                 <div className="form-group">

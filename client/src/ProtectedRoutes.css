@@ -1,22 +1,83 @@
+.table-container {
+  overflow-x: auto; 
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f8f9fa; 
+}
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1em;
-    text-align: left;
-  }
-  
-  table th, table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-  }
-  
-  table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-  
-  table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
+  width: 100%;
+  min-width: 800px; 
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+  word-wrap: break-word; 
+  max-width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+table th {
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+  background-color: #e8f5e9;
+  cursor: pointer;
+}
+
+table td.token {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.top-bar button {
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.top-bar .back-button {
+  background-color: #2196F3;
+  color: white;
+}
+
+.top-bar .back-button:hover {
+  background-color: #1976D2;
+}
+
+.top-bar .logout-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.top-bar .logout-button:hover {
+  background-color: #d32f2f;
+}

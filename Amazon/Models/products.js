@@ -1,22 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// const ProductSchema = new Schema({
-//   name: { type: String, required: true },
-//   description: String,
-//   price: { type: Number, required: true },
-//   brand: { type: String, required: true },
-//   category: String,
-//   features: { type: [String], default: [] },
-//   inStock: { type: Boolean, default: true },
-//   stockStatus: { type: String, default: 'In Stock' },
-//   soldBy: { type: String, required: true },
-//   imageUrl: { type: String, required: true }
-// });
-
-
-// const mongoose = require('mongoose');
-
 const ProductSchema = new Schema(
   {
     name: {
@@ -44,13 +28,13 @@ const ProductSchema = new Schema(
       trim: true,
     },
     features: {
-      type: [String], // Array to store feature descriptions
+      type: [String], 
       required: true,
     },
     soldBy: {
       type: String,
       required: true,
-      trim: true, // Seller information
+      trim: true,
     },
     imageUrl: {
       type: String,
@@ -62,18 +46,18 @@ const ProductSchema = new Schema(
         required: true,
       },
       supplier: {
-        type: String, // Supplier information for the product
+        type: String, 
         required: true,
         trim: true,
       },
       lastUpdated: {
-        type: Date, // Timestamp of when the inventory was last updated
+        type: Date,
         default: Date.now,
       },
     },
     isActive: {
       type: Boolean,
-      default: true, // Mark whether the product is active or discontinued.
+      default: true,
     },
     inStock: 
     { type: Boolean, 
@@ -89,7 +73,7 @@ const ProductSchema = new Schema(
     },
   },
   {
-    timestamps: true, // Automatically manages `createdAt` and `updatedAt`.
+    timestamps: true,
   }
 );
 

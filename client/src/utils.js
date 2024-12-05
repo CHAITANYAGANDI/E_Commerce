@@ -14,3 +14,10 @@ export const handleError = (msg) => {
         position: 'top-right'
     })
 }
+
+export const handleCartClick = (navigate) => {
+    navigate('/cart');
+  };
+  
+  export default handleCartClick;
+  

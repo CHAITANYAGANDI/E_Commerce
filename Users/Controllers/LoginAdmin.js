@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
-const AdminModel = require("../Models/admins");
+const UserModel = require("../Models/User");
+
 const jwt = require('jsonwebtoken');
 
 
@@ -7,14 +8,14 @@ const login = async (req,res) => {
 
     try{
 
-        const {adminname,password} = req.body;
+        const {adminId,password} = req.body;
 
-        const admin = await AdminModel.findOne({adminname});
+        const admin = await UserModel.findOne({email:adminId});
 
         const errorMessage = 'Invalid Credentials';
 
 
-        if(!admin){
+        if(!admin||admin.role!='Admin'){
 
             return res.status(403).json({message:errorMessage,success:false});
 
@@ -28,7 +29,7 @@ const login = async (req,res) => {
 
         const jwtToken = jwt.sign(
             {
-                adminname:admin.adminname,_id:admin._id
+                adminId:admin.email,_id:admin._id
             },
 
             process.env.JWT_SECRET,
@@ -41,7 +42,7 @@ const login = async (req,res) => {
             message:"Access Granted",
             success:true,
             jwtToken,
-            adminname:admin.adminname
+            adminId:admin.email
         })
 
     } catch(err){

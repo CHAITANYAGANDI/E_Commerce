@@ -22,7 +22,6 @@ function App() {
           {/* <RefreshHandler setIsAuthenticated={setIsAuthenticated} /> */}
             <Routes>
                 <Route path="/" element={<Navigate to="/auth/login"/>} />
-
                 <Route path="/auth/register" element={<AuthRegistration />} />
                 <Route path="/auth/login" element={<AuthLogin />} />
                 <Route path="/auth/dashboard" element={<AuthDashboard />} />

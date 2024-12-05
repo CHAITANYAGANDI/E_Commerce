@@ -16,4 +16,4 @@ initialize_db()
 app.register_blueprint(product_api, url_prefix='/')
 
 if __name__ == '__main__':
-    app.run(port=7004, debug=True)
+    app.run(port=8001, debug=True)

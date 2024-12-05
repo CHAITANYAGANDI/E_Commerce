@@ -2,6 +2,8 @@ import React, { useEffect,useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import {ToastContainer} from 'react-toastify'
 import { handleError, handleSuccess } from '../utils'
+import '../index.css';
+
 
 function Login(){
     const [loginInfo,setloginInfo] = useState({
@@ -67,6 +69,9 @@ function Login(){
     return (
         <div className='container'>
             <h1>
+                Trendy Treasures
+            </h1>
+            <h1>
                 Login
             </h1>
             <form onSubmit={handleLogin}>
@@ -79,7 +84,7 @@ function Login(){
                     type='email'
                     name='email'
                     autoFocus
-                    placeholder='Enter your email'
+                    placeholder='Enter your Email'
                     value={loginInfo.email}/>
                 </div>
                 <div>

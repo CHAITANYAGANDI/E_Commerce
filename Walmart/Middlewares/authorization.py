@@ -16,7 +16,6 @@ def ensure_authenticated(func):
 
             decoded = jwt.decode(auth, os.getenv("INVENTORY_SECRET"), algorithms=["HS256"])
             request.inventory = decoded
-            print(decoded)
             original_url = request.headers.get('x-original-url')
 
             if decoded.get("api_url") not in original_url:

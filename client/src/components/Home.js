@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { handleError, handleSuccess } from '../utils';
+import { useNavigate, Link } from 'react-router-dom';
+import { handleError, handleSuccess, handleCartClick } from '../utils';
 import { FaUser, FaShoppingCart } from 'react-icons/fa';
 import ReactPaginate from 'react-paginate';
 import '../Home.css';
@@ -16,21 +16,53 @@ function Home() {
   const amazonLogoUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg';
   const walmartLogoUrl = 'https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg';
 
-
   useEffect(() => {
     setLoggedInUser(localStorage.getItem('loggedInUser'));
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('UserToken');
-    localStorage.removeItem('googleAccessToken');
     localStorage.removeItem('currentUserEmail');
-    localStorage.removeItem('otpVerificationStatus');
     localStorage.removeItem('loggedInUser');
     handleSuccess('Logged out successfully');
     setTimeout(() => {
       navigate('/login');
     }, 1000);
+  };
+
+  const handleDeleteAccount = async () => {
+    const email = localStorage.getItem('currentUserEmail');
+    if (!email) {
+      handleError('No user email found');
+      return;
+    }
+    if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:7000/api/user/account/delete/${email}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': localStorage.getItem('UserToken'),
+        },
+      });
+
+      if (response.ok) {
+        handleSuccess('Account deleted successfully');
+        localStorage.removeItem('UserToken');
+        localStorage.removeItem('currentUserEmail');
+        localStorage.removeItem('loggedInUser');
+        setTimeout(() => {
+          navigate('/signup');
+        }, 1500);
+      } else {
+        const errorData = await response.json();
+        handleError(errorData.message || 'Failed to delete account');
+      }
+    } catch (error) {
+      handleError(error.message || 'An error occurred while deleting the account');
+    }
   };
 
   const fetchProducts = async () => {
@@ -48,25 +80,54 @@ function Home() {
         },
       };
 
-      const [walmartResponse, amazonResponse] = await Promise.all([
-        fetch(walmartUrl, walmartHeaders),
-        fetch(amazonUrl, amazonHeaders),
-      ]);
+      let walmartProducts = [];
+      let amazonProducts = [];
 
-      const walmartProducts = await walmartResponse.json();
-      const amazonProducts = await amazonResponse.json();
+      try {
+        const walmartResponse = await fetch(walmartUrl, walmartHeaders);
+        if (walmartResponse.ok) {
+          walmartProducts = await walmartResponse.json();
+          walmartProducts = Array.isArray(walmartProducts)
+            ? walmartProducts
+            : walmartProducts.products || [];
+        }
+      } catch (err) {
+        console.warn('Walmart products could not be fetched:', err);
+      }
 
-      const taggedWalmartProducts = (Array.isArray(walmartProducts) ? walmartProducts : walmartProducts.products || []).map(
-        (product) => ({ ...product, source: 'walmart' })
-      );
+      try {
+        const amazonResponse = await fetch(amazonUrl, amazonHeaders);
+        if (amazonResponse.ok) {
+          amazonProducts = await amazonResponse.json();
+          amazonProducts = Array.isArray(amazonProducts)
+            ? amazonProducts
+            : amazonProducts.products || [];
+        }
+      } catch (err) {
+        console.warn('Amazon products could not be fetched:', err);
+      }
 
-      const taggedAmazonProducts = (Array.isArray(amazonProducts) ? amazonProducts : amazonProducts.products || []).map(
-        (product) => ({ ...product, source: 'amazon' })
-      );
+      const taggedWalmartProducts = walmartProducts.map((product) => ({
+        ...product,
+        source: 'walmart',
+      }));
+
+      const taggedAmazonProducts = amazonProducts.map((product) => ({
+        ...product,
+        source: 'amazon',
+      }));
 
       const combinedProducts = [...taggedWalmartProducts, ...taggedAmazonProducts];
 
-      setProducts(combinedProducts);
+      if (taggedWalmartProducts.length > 0 && taggedAmazonProducts.length > 0) {
+        setProducts(combinedProducts);
+      } else if (taggedWalmartProducts.length > 0) {
+        setProducts(taggedWalmartProducts);
+      } else if (taggedAmazonProducts.length > 0) {
+        setProducts(taggedAmazonProducts);
+      } else {
+        setProducts([]);
+      }
     } catch (err) {
       handleError(err);
     }
@@ -76,8 +137,8 @@ function Home() {
     fetchProducts();
   }, []);
 
-  const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`);
+  const handleProductClick = (productId, source) => {
+    navigate(`/product/${source}/${productId}`);
   };
 
   const handlePageClick = (event) => {
@@ -90,17 +151,24 @@ function Home() {
   return (
     <div className="home-container">
       <header className="header">
-        <h1 className="company-name">Trendy Treasures</h1>
+
+      <h1 className="company-name">
+          <Link to="/home" className="home-link">
+            Trendy Treasures
+          </Link>
+        </h1>
         <div className="header-right">
-          <input type="text" placeholder="Search..." className="search-bar" />
-          <FaShoppingCart className="cart-icon" />
+          <FaShoppingCart className="cart-icon" onClick={() => handleCartClick(navigate)} />
           <div className="profile-dropdown">
             <FaUser className="profile-icon" onClick={() => setShowDropdown(!showDropdown)} />
             <span className="user-name">{loggedInUser}</span>
             {showDropdown && (
               <div className="dropdown-content">
                 {loggedInUser ? (
-                  <button onClick={handleLogout}>Logout</button>
+                  <>
+                    <button onClick={handleLogout}>Logout</button>
+                    <button onClick={handleDeleteAccount}>Remove Account</button>
+                  </>
                 ) : (
                   <button onClick={() => navigate('/login')}>Login</button>
                 )}
@@ -115,7 +183,7 @@ function Home() {
           <div
             key={index}
             className="product-card"
-            onClick={() => handleProductClick(item._id)}
+            onClick={() => handleProductClick(item._id, item.source)}
           >
             <img
               src={item.imageUrl}
@@ -155,3 +223,4 @@ function Home() {
 }
 
 export default Home;
+

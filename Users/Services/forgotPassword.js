@@ -5,8 +5,8 @@ const {getOtp,setOtp} = require('../Services/OtpService');
 
 
 const forgotPassword = async (req, res) => {
+    
     const { email } = req.body;
-
 
     const user = await UserModel.findOne({ email });
 
@@ -33,7 +33,7 @@ const forgotPassword = async (req, res) => {
     const mailOptions = {
         from: process.env.MAIL_ADDRESS,
         to: email,
-        subject: 'Password Reset OTP',
+        subject: 'Trendy Treasures Password Recovery',
         text:`Your OTP for password reset is ${otp}. This OTP will expire in 2 minutes.`
 
     };

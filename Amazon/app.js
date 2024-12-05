@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const ProductRouter = require('./Routes/ProductRouter');
 
-const PORT = 7003;
+const PORT = 8000;
 
 require('dotenv').config();
 require('./Models/dbConnection');

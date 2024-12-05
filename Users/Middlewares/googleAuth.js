@@ -1,5 +1,5 @@
 const axios = require('axios');
-const GoogleUserModel = require("../Models/GoogleUser");
+const UserModel = require("../Models/User");
 
 
 require('dotenv').config()
@@ -29,11 +29,12 @@ async function getGoogleUser(code) {
 
     const name = userResponse.data.name;
 
-    const googleUser = await GoogleUserModel.findOne({email});
+
+    const googleUser = await UserModel.findOne({email});
 
     if (!googleUser){
 
-      const googleUserModel = new GoogleUserModel({name, email});
+      const googleUserModel = new UserModel({ name, email,isGoogleUser: true});
 
       await googleUserModel.save();
 

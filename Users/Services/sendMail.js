@@ -22,7 +22,7 @@ async function sendMail(email) {
         const mailOptions = {
             from: process.env.MAIL_ADDRESS,
             to: email,
-            subject: 'Password Reset OTP',
+            subject: 'Trendy Treasures Password Assistance',
             text: `Your OTP for Two Factor Authentication to login to your account is ${otp}. This OTP will expire in 2 minutes.`,
         };
 

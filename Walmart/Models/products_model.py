@@ -15,7 +15,7 @@ class Product(Document):
     features = ListField(StringField())
     sold_by = StringField(required=True)
     image_url = StringField(required=True)
-    inventory = ListField(DictField())  # Changed to DictField
+    inventory = ListField(DictField())
     is_active = BooleanField(default=True)
     in_stock = BooleanField(default=True)
     created_at = DateTimeField(default=datetime.utcnow)

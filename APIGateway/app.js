@@ -3,6 +3,10 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
+const cors = require('cors');
+
+app.use(cors());
+
 
 app.set('trust proxy', true);
 
@@ -19,17 +23,10 @@ app.use('/api/user', createProxyMiddleware({
 
 }));
 
-app.use('/api/admin', createProxyMiddleware({
-    target: 'http://localhost:7002',
-    changeOrigin: true,
-    pathRewrite: { '^/api/admin': '/' },
- 
-}));
-
 app.use('/api/amazon/products', createProxyMiddleware({
-    target: 'http://localhost:7003',
+    target: 'http://localhost:8000',
     changeOrigin: true,
-    pathRewrite: { '^/api/products': '/' },
+    pathRewrite: { '^/api/amazon/products': '/' },
     onProxyReq: (proxyReq, req, res) => {
         proxyReq.setHeader('x-original-url', req.headers['x-original-url']);
     }
@@ -37,7 +34,7 @@ app.use('/api/amazon/products', createProxyMiddleware({
 }));
 
 app.use('/api/walmart/products', createProxyMiddleware({
-    target: 'http://127.0.0.1:7004',
+    target: 'http://127.0.0.1:8001',
     changeOrigin: true,
     pathRewrite: { '^/api/walmart/products': '/' },
     onProxyReq: (proxyReq, req, res) => {
@@ -46,19 +43,6 @@ app.use('/api/walmart/products', createProxyMiddleware({
 
 }));
 
-
-// app.use('/api/cart', createProxyMiddleware({
-//     target: 'http://localhost:7006',
-//     changeOrigin: true,
-//     pathRewrite: { '^/api/cart': '/' },
-// }));
-
-
-// app.use('/api/orders', createProxyMiddleware({
-//     target: 'http://localhost:7005',
-//     changeOrigin: true,
-//     pathRewrite: { '^/api/orders': '/' },
-// }));
 
 
 app.listen(7000, () => {

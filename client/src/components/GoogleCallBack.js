@@ -17,7 +17,10 @@ function GoogleAuthCallback() {
 
           if (data.accessToken){
 
-            localStorage.setItem('googleAccessToken',data.accessToken);
+            localStorage.setItem('UserToken',data.accessToken);
+            localStorage.setItem('loggedInUser',data.userData.name);
+            localStorage.setItem('currentUserEmail',data.userData.email);
+    
             navigate('/home');
             
           }

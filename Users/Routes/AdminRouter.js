@@ -19,7 +19,7 @@ const clientData = require('../Controllers/clientData');
 
 const token = require('../Controllers/token');
 
-
+const {getAllUsers,deleteUserById}  = require('../Controllers/UserController');
 
 
 
@@ -27,16 +27,19 @@ router.post('/login',loginvalidation,loginAdmin);
 
 router.post('/register',signupValidation,registerAdmin);
 
-router.post('/auth',authenticate);
+router.post('/auth',verifyToken,authenticate);
 
-router.get('/client/creds',getCreds);
+router.get('/client/creds',verifyToken,getCreds);
 
 router.post('/auth/callback',auth);
 
-router.post('/client/details',clientData);
+router.post('/client/details',verifyToken,clientData);
 
-router.get('/token',token);
+router.get('/token',verifyToken,token);
 
+router.get('/users/get',verifyToken,getAllUsers);
+
+router.delete('/users/delete/:userId',verifyToken,deleteUserById);
 
 
 module.exports = router;

@@ -7,27 +7,23 @@ import '../AdminDashboard.css';
 function AdminDashboard() {
     const navigate = useNavigate();
     const handleLogout = () => {
-        localStorage.removeItem('AdminToken'); // Remove the auth token from local storage
-        handleSuccess('Logged out successfully'); // Show success message
+        localStorage.removeItem('AdminToken'); 
+        handleSuccess('Logged out successfully'); 
         setTimeout(() => {
-            navigate('/admin/login'); // Redirect to the admin login page after logout
-        }, 1000); // Add a slight delay to allow success message display
+            navigate('/admin/login'); 
+        }, 1000); 
     };
 
     return (
         <div className="dashboard-container">
             <div className="top-bar">
                 <h1>Admin Dashboard</h1>
-                
             </div>
             <div className="dashboard-buttons">
-                <button onClick={() => navigate('/admin/management')}>Admin Management</button>
+                <button onClick={() => navigate('/admin/register')}>Add Admin</button>
                 <button onClick={() => navigate('/admin/users')}>User Management</button>
                 <button onClick={() => navigate('/admin/auth')}>Auth Management</button>
-                <button onClick={() => navigate('/admin/products')}>Product Management</button>
-
-                <button onClick={() => navigate('/admin/auth/protected')}>Authorized API</button>
-                
+                <button onClick={() => navigate('/admin/auth/protected')}>Authorized API</button>    
             </div>
             <button onClick={handleLogout} className="logout-button">
                     Logout

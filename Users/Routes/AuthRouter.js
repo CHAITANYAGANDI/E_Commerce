@@ -14,7 +14,6 @@ router.post('/signup',signupValidation,signup);
 
 router.post('/verifyotp',verifyOtp);
 
-
 module.exports = router;
 
 

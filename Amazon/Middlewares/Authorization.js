@@ -6,9 +6,7 @@ const ensureAuthenticated = (req,res,next)=>{
 
     if(auth=='null'){
 
-
-        return next(new Error('Unauthorized'));
-        // res.status(403).json({message:'Unauthorized'});
+        res.status(403).json({ "message": "Authorization header is missing or invalid. Please provide a valid token." });
     }
 
     else{
@@ -19,12 +17,9 @@ const ensureAuthenticated = (req,res,next)=>{
     
             req.products = decoded;
 
-            console.log(decoded);
-
             // const originalUrl = req.headers['x-original-url'];
             // console.log('Gateway URL:', originalUrl); // This will show http://localhost:7000/api/products/get
 
-            // // If you still need the internal URL for some reason
             // const internalUrl = `${req.protocol}://${req.get('host')}${req.url}`;
             // console.log('Internal URL:', internalUrl); // This will show http://localhost:7003/get
 
@@ -38,23 +33,17 @@ const ensureAuthenticated = (req,res,next)=>{
             else{
 
                 return res.status(403).json({ error: 'Invalid API URL. Access denied.' });
-
             }
-    
     
         }catch(err){
     
-  
-            next(new Error('TOKEN IS EXPIRED'));
-            // return res.status(403).json({
-            //     message:'TOKEN IS EXPIRED'
-            // })
+            return res.status(403).json({
+                message:'TOKEN IS EXPIRED'
+            })
         }
 
     }
     
-
-
 };
 
 module.exports = ensureAuthenticated;

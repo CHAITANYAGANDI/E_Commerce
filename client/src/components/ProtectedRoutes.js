@@ -15,7 +15,12 @@ const CredentialsTable = () => {
 
     const fetchCredentials = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/api/admin/client/creds'); 
+        const response = await axios.get('http://localhost:7000/api/user/admin/client/creds',
+          {
+          headers: {
+            'Authorization': localStorage.getItem('AdminToken'),
+          }
+        }); 
         if (response.data.success) {
           setCredentials(response.data.data); 
         } else {
@@ -49,11 +54,12 @@ const CredentialsTable = () => {
 
   return (
     <div className="credentials-table-container">
-      <div className="top-bar">
-        <button onClick={handleBack} className="back-button">&#8592; Back</button>
-        <button onClick={handleLogout} className="logout-button">Logout</button>
-      </div>
-      <h2>API Credentials</h2>
+    <div className="top-bar">
+      <button onClick={handleBack} className="back-button">&#8592; Back</button>
+      <button onClick={handleLogout} className="logout-button">Logout</button>
+    </div>
+    <h2>API Credentials</h2>
+    <div className="table-container">
       <table>
         <thead>
           <tr>
@@ -73,6 +79,7 @@ const CredentialsTable = () => {
         </tbody>
       </table>
     </div>
+  </div>
   );
 };
 

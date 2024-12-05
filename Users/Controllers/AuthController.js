@@ -1,12 +1,8 @@
 const bcrypt = require('bcryptjs');
 const UserModel = require("../Models/User");
-
-const {getOtp,setOtp} = require('../Services/OtpService');
 const sendMail = require('../Services/sendMail');
 
 
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 
 const signup = async (req,res) =>{
     try {
@@ -22,7 +18,7 @@ const signup = async (req,res) =>{
 
         }
 
-        const userModel = new UserModel({name, email, password});
+        const userModel = new UserModel({ name, email, password});
         const salt = await bcrypt.genSalt(10);
         userModel.password = await bcrypt.hash(password,salt);
 
@@ -55,7 +51,6 @@ const login = async (req,res) => {
         const user = await UserModel.findOne({email});
   
         const erroMessage = 'Invalid Credentials';
-
 
         if(!user){
 

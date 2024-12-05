@@ -34,10 +34,12 @@ const auth = async (req,res) =>{
 
             } catch (error) {
                 console.error('Error processing credentials:', error);
+                return res.status(500).json({
+                    success: false,
+                    message: `Failed to process credential for API: ${cred.api_name}`
+                });
             }
         });
-
-  
 
         res.status(200).json({
             success: true,
@@ -47,7 +49,10 @@ const auth = async (req,res) =>{
 
     }catch(err){
 
-        console.log(err);
+        res.status(500).json({
+            success: false,
+            message: 'An unexpected error occurred while processing the request'
+        });
     }
 
 }

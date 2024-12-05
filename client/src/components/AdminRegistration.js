@@ -7,7 +7,7 @@ import '../AdminRegistration.css';
 function AdminRegistration() {
     const [formData, setFormData] = useState({
         name: '',
-        adminname: '',
+        adminId: '',
         password: ''
     });
     
@@ -21,14 +21,14 @@ function AdminRegistration() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        const { name, adminname, password } = formData;
+        const { name, adminId, password } = formData;
         
-        if (!name || !adminname || !password) {
+        if (!name || !adminId  || !password) {
             return handleError('All fields are required');
         }
         
         try {
-            const response = await fetch('http://localhost:7000/api/admin/register', {
+            const response = await fetch('http://localhost:7000/api/user/admin/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ function AdminRegistration() {
             
             if (success) {
                 handleSuccess(message);
-                setTimeout(() => navigate('/admin/login'), 1000);
+                setTimeout(() => navigate('/admin/dashboard'), 1000);
             } else if (error) {
                 handleError(error.details[0].message);
             } else {
@@ -54,7 +54,7 @@ function AdminRegistration() {
     
     return (
         <div className="registration-container">
-            <h1>Create an Account</h1>
+            <h1>Create an Admin Account</h1>
             <form onSubmit={handleSubmit} className="registration-form">
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
@@ -68,12 +68,12 @@ function AdminRegistration() {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="adminname">Admin Name</label>
+                    <label htmlFor="adminId">Admin ID</label>
                     <input
                         type="text"
-                        name="adminname"
-                        placeholder="Enter your adminname"
-                        value={formData.adminname}
+                        name="adminId"
+                        placeholder="Enter your Admin ID"
+                        value={formData.adminId}
                         onChange={handleChange}
                         required
                     />
@@ -89,7 +89,7 @@ function AdminRegistration() {
                         required
                     />
                 </div>
-                <button type="submit" className="register-button">Register</button>
+                <button type="submit" className="register-button">Add Admin</button>
             </form>
             <ToastContainer />
         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { handleError, handleSuccess } from '../utils';
 
-// import './AuthManagement.css';
+import '../AuthManagement.css';
 
 function AuthManagement() {
     const navigate = useNavigate();

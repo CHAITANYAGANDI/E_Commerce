@@ -1,11 +1,13 @@
 const bcrypt = require('bcryptjs');
-const AdminModel = require("../Models/admins");
+const UserModel = require("../Models/User");
+
 
 const register = async (req,res) =>{
     try {
-        const {name, adminname, password} = req.body;
+        const {name, adminId, password} = req.body;
 
-        const admin = await AdminModel.findOne({adminname});
+
+        const admin = await UserModel.findOne({email:adminId});
 
         if (admin){
 
@@ -15,7 +17,7 @@ const register = async (req,res) =>{
 
         }
 
-        const adminModel = new AdminModel({name, adminname, password});
+        const adminModel = new UserModel({name, email:adminId, password, role:'Admin'});
         const salt = await bcrypt.genSalt(10);
         adminModel.password = await bcrypt.hash(password,salt);
 
@@ -29,6 +31,8 @@ const register = async (req,res) =>{
     }
 
     catch(err){
+
+        console.log(err);
 
         res.status(500).json({
             message:"Internal server error",

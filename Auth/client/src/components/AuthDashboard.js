@@ -56,7 +56,7 @@ function AuthDashboard() {
             <div className="top-bar">
                 <h1>Auth Dashboard</h1>
             
-                <button onClick={handleLogout} className="logout-button">Logout</button>
+                
             </div>
             <button onClick={handleCreateCredentials} className="create-credentials-button">
                 Create New Credentials
@@ -90,6 +90,7 @@ function AuthDashboard() {
                     <p>No credentials created yet.</p>
                 )}
             </div>
+            <button onClick={handleLogout} className="logout-button">Logout</button>
         </div>
     );
 }

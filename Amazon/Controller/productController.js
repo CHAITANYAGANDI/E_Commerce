@@ -1,6 +1,6 @@
 const ProductsModel = require('../Models/products');
 
-exports.getAllProductDetails = async (req, res) => {
+const getAllProductDetails = async (req, res) => {
     try {
     
       const products = await ProductsModel.find();
@@ -16,7 +16,7 @@ exports.getAllProductDetails = async (req, res) => {
   };
 
   
-exports.getProductDetails = async (req, res) => {
+const getProductDetails = async (req, res) => {
   try {
     const { productId } = req.params;
 
@@ -25,7 +25,6 @@ exports.getProductDetails = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: "Product not found." });
     }
-
 
     res.status(200).json({
       product
@@ -36,7 +35,7 @@ exports.getProductDetails = async (req, res) => {
 };
 
 
-exports.postProductDetails = async (req, res) => {
+const postProductDetails = async (req, res) => {
   try {
     const { 
       name, 
@@ -50,7 +49,7 @@ exports.postProductDetails = async (req, res) => {
       inventory 
     } = req.body;
 
-    // Validate required fields
+
     if (
       !name || 
       !price || 
@@ -62,10 +61,10 @@ exports.postProductDetails = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields." });
     }
 
-    // Set inStock based on inventory.stock
+  
     const inStock = inventory.stock > 0;
 
-    // Construct the product document
+    
     const product = {
       name,
       description,
@@ -80,16 +79,13 @@ exports.postProductDetails = async (req, res) => {
         supplier: inventory.supplier,
         lastUpdated: inventory.lastUpdated || new Date().toISOString()
       },
-      isActive: true, // Default to active when creating a new product
-      inStock // Dynamically calculated
+      isActive: true,
+      inStock 
     };
 
-    // Insert the product into the database
+    
     const savedProduct = await ProductsModel.create(product);
 
-    console.log(savedProduct);
-
-    // Respond with the created product
     return res.status(201).json({
       message: "Product created successfully.",
       product: savedProduct
@@ -99,3 +95,7 @@ exports.postProductDetails = async (req, res) => {
     return res.status(500).json({ message: "Internal server error." });
   }
 };
+
+
+
+module.exports = {getAllProductDetails,getProductDetails,postProductDetails}

@@ -39,10 +39,11 @@ function RequestAuthorization() {
             return handleError('All fields are required');
         }
 
-        const response = await fetch('http://localhost:7000/api/admin/client/details', {
+        const response = await fetch('http://localhost:7000/api/user/admin/client/details', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('AdminToken'),
             },
             body: JSON.stringify(formData)
         });

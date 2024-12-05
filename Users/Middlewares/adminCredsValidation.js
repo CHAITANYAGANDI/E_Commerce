@@ -1,9 +1,10 @@
 const joi = require('joi');
 
 const signupValidation = (req,res,next)=> {
+    
     const schema = joi.object({
         name:joi.string().min(3).max(100).required(),
-        adminname:joi.string().min(3).max(100).required(),
+        adminId:joi.string().min(3).max(100).required(),
         password: joi.string().min(4).max(100).required()
     });
 
@@ -19,8 +20,9 @@ const signupValidation = (req,res,next)=> {
 
 
 const loginvalidation = (req,res,next)=> {
+    
     const schema = joi.object({
-        adminname: joi.string().min(4).max(100).required(),
+        adminId: joi.string().min(4).max(100).required(),
         password: joi.string().min(4).max(100).required()
 
     });

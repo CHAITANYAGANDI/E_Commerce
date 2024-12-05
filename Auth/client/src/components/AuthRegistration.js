@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { handleError, handleSuccess } from '../utils';
-import '../Auth.css';
+import '../AuthRegistration.css';
 
 function AuthRegistration() {
     const [formData, setFormData] = useState({
@@ -54,7 +54,7 @@ function AuthRegistration() {
     
     return (
         <div className="registration-container">
-            <h1>Create an Account</h1>
+            <h1>Create an Auth Account</h1>
             <form onSubmit={handleSubmit} className="registration-form">
                 <div className="form-group">
                     <label htmlFor="name">Name</label>

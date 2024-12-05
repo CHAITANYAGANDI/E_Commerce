@@ -43,7 +43,22 @@ const authenticate=  async(req,res) =>{
 
     }catch (err){
 
-        console.log(err);
+        console.error('Error during authentication:', err.message);
+
+        if (err.response) {
+
+            return res.status(err.response.status || 500).json({
+                success: false,
+                message: `Authorization service error: ${err.response.data.message || 'An error occurred'}`,
+                error: err.response.data,
+            });
+        }
+        
+        res.status(500).json({
+            success: false,
+            message: 'An unexpected error occurred during authentication',
+            error: err.message,
+        });
     }
     
 

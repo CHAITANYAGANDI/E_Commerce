@@ -1,40 +1,36 @@
+const axios = require('axios');
 const jwt = require('jsonwebtoken');
 
-const ensureAuthenticated = (req,res,next)=>{
+const ensureAuthorized = async (req, res, next) => {
+    const userToken = req.headers['authorization'];
 
-    const auth = req.headers['authorization'];
-
-    if(auth=='null'){
-
-
-        return next(new Error('Unauthorized'));
-        // res.status(403).json({message:'Unauthorized'});
+    if (!userToken || userToken === 'null') {
+        return res.status(403).json({ message: 'Unauthorized: Token not provided' });
     }
 
-    else{
-
-        try{
-
-            const decoded = jwt.verify(auth,process.env.JWT_SECRET);
+    try {
     
+        if (userToken.startsWith('ya29.')) { 
+            const response = await axios.get('https://www.googleapis.com/oauth2/v3/tokeninfo', {
+                params: { access_token: userToken },
+            });
+
+            if (response.data.aud === process.env.GOOGLE_CLIENT_ID) {
+                req.user = response.data;
+                return next();
+            } else {
+                return res.status(403).json({ message: 'Unauthorized: Invalid Google Token' });
+            }
+        } else {
+
+            const decoded = jwt.verify(userToken, process.env.JWT_SECRET);
             req.user = decoded;
-    
-            next();
-    
-    
-        }catch(err){
-    
-  
-            next(new Error('TOKEN IS EXPIRED'));
-            // return res.status(403).json({
-            //     message:'TOKEN IS EXPIRED'
-            // })
+            return next();
         }
-
+    } catch (error) {
+        console.error('Token verification failed:', error.message);
+        return res.status(403).json({ message: 'Unauthorized: Token verification failed' });
     }
-    
-
-
 };
 
-module.exports = ensureAuthenticated;
+module.exports = ensureAuthorized;
