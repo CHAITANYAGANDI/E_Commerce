@@ -1,12 +1,12 @@
 const nodemailer = require('nodemailer');
 const { getOtp, setOtp } = require('../Services/OtpService');
+const crypto = require('crypto');
 
 async function sendMail(email) {
     try {
      
-        const otp = Math.floor(1000 + Math.random() * 9000);
+        const otp = crypto.randomInt(1000, 10000);
 
-    
         await setOtp(email, otp);
 
 

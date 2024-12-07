@@ -10,7 +10,13 @@ function AdminRegistration() {
         adminId: '',
         password: ''
     });
-    
+    const handleLogout = () => {
+        localStorage.removeItem('AdminToken');
+        handleSuccess('Logged out successfully');
+        setTimeout(() => {
+          navigate('/admin/login');
+        }, 1000);
+      };
     const navigate = useNavigate();
     
     const handleChange = (e) => {
@@ -31,7 +37,8 @@ function AdminRegistration() {
             const response = await fetch('http://localhost:7000/api/user/admin/register', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('AdminToken'),
                 },
                 body: JSON.stringify(formData)
             });
@@ -43,8 +50,13 @@ function AdminRegistration() {
                 handleSuccess(message);
                 setTimeout(() => navigate('/admin/dashboard'), 1000);
             } else if (error) {
+               
                 handleError(error.details[0].message);
             } else {
+                console.log(message);
+                if (message.toLowerCase().includes('token has expired')){
+                    handleLogout();
+                  }
                 handleError(message);
             }
         } catch (err) {

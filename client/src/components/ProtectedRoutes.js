@@ -1,43 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
 import '../ProtectedRoutes.css'
 import { handleError, handleSuccess } from '../utils';
 
 
 const CredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
 
     const fetchCredentials = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/api/user/admin/client/creds',
+        const response = await fetch('http://localhost:7000/api/user/admin/client/creds',
           {
           headers: {
             'Authorization': localStorage.getItem('AdminToken'),
           }
         }); 
-        if (response.data.success) {
-          setCredentials(response.data.data); 
-        } else {
+
+        if(response.ok){
+
+          const responseData = await response.json();
+
+          setCredentials(responseData.data);
+
+        }
+
+        else{
+          
+
+          const errorData = await response.json();
+            if (errorData.message.toLowerCase().includes('token has expired')){
+                handleLogout();
+              }
+
           console.error('Failed to fetch credentials:', response.data.message);
         }
+        
+  
       } catch (error) {
         console.error('Error fetching credentials:', error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     fetchCredentials();
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('AuthToken');
+    localStorage.removeItem('AdminToken');
     handleSuccess('Logged out successfully');
     setTimeout(() => {
       navigate('/admin/login');
@@ -47,10 +58,6 @@ const CredentialsTable = () => {
   const handleBack = () => {
     navigate('/admin/dashboard');
   };
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div className="credentials-table-container">

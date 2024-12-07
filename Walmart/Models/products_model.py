@@ -37,6 +37,7 @@ class Product(Document):
         }
         
         return {
+            '_id': str(self.id),
             'name': self.name,
             'description': self.description,
             'price': self.price,
@@ -52,7 +53,6 @@ class Product(Document):
             },
             'isActive': self.is_active,
             'inStock': self.in_stock,
-            '_id': str(self.id),
             'createdAt': self.created_at,
             'updatedAt': self.updated_at
         }

@@ -7,7 +7,7 @@ const loginAdmin = require('../Controllers/LoginAdmin');
 
 const {signupValidation,loginvalidation} = require('../Middlewares/adminCredsValidation');
 
-const verifyToken = require("../Middlewares/verifyToken");
+const ensureAuthorized = require('../Middlewares/Authorization');
 
 const authenticate = require('../Middlewares/authenticate');
 
@@ -25,21 +25,21 @@ const {getAllUsers,deleteUserById}  = require('../Controllers/UserController');
 
 router.post('/login',loginvalidation,loginAdmin);
 
-router.post('/register',signupValidation,registerAdmin);
+router.post('/register',signupValidation,ensureAuthorized,registerAdmin);
 
-router.post('/auth',verifyToken,authenticate);
+router.post('/auth',ensureAuthorized,authenticate);
 
-router.get('/client/creds',verifyToken,getCreds);
+router.get('/client/creds',ensureAuthorized,getCreds);
 
 router.post('/auth/callback',auth);
 
-router.post('/client/details',verifyToken,clientData);
+router.post('/client/details',ensureAuthorized,clientData);
 
-router.get('/token',verifyToken,token);
+router.get('/token',ensureAuthorized,token);
 
-router.get('/users/get',verifyToken,getAllUsers);
+router.get('/users/get',ensureAuthorized,getAllUsers);
 
-router.delete('/users/delete/:userId',verifyToken,deleteUserById);
+router.delete('/users/delete/:userId',ensureAuthorized,deleteUserById);
 
 
 module.exports = router;

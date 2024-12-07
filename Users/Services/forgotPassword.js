@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
 const UserModel = require("../Models/User");
 const {getOtp,setOtp} = require('../Services/OtpService');
+const crypto = require('crypto');
 
 
 const forgotPassword = async (req, res) => {
@@ -17,7 +18,8 @@ const forgotPassword = async (req, res) => {
         });
     }
 
-    const otp = Math.floor(1000 + Math.random() * 9000);
+    const otp = crypto.randomInt(1000, 10000);
+
     setOtp(email, otp);
 
 

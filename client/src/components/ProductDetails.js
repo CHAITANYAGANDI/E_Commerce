@@ -138,6 +138,9 @@ function ProductDetails() {
         handleSuccess(Data.message);
       } else {
         const errorData = await response.json();
+        if (errorData.message.toLowerCase().includes('token has expired')){
+          handleLogout();
+        }
         handleError(errorData.message || 'Failed to add product to cart.');
       }
     } catch (err) {
@@ -179,6 +182,9 @@ function ProductDetails() {
   
       if (!cartResponse.ok) {
         const errorData = await cartResponse.json();
+        if (errorData.message.toLowerCase().includes('token has expired')){
+          handleLogout();
+        }
         handleError(errorData.message || 'Failed to add product to cart.');
         return;
       }

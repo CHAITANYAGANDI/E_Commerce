@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate,Link } from 'react-router-dom';
-import { handleError, handleSuccess,handleCartClick } from '../utils';
+import { useNavigate, Link } from 'react-router-dom';
+import { handleError, handleSuccess, handleCartClick } from '../utils';
 import { FaUser, FaShoppingCart } from 'react-icons/fa';
 import '../Checkout.css';
 import '../Home.css';
@@ -32,9 +32,7 @@ function Checkout() {
   };
 
   const handleDeleteAccount = async () => {
-
-
-    const email = localStorage.getItem('currentUserEmail'); 
+    const email = localStorage.getItem('currentUserEmail');
     if (!email) {
       handleError('No user email found');
       return;
@@ -77,11 +75,10 @@ function Checkout() {
     }
 
     try {
-      const response = await fetch(`http://localhost:7000/api/user/order/get/${userId}`,{
+      const response = await fetch(`http://localhost:7000/api/user/order/get/${userId}`, {
         headers: {
           'Authorization': localStorage.getItem('UserToken'),
-        }
-
+        },
       });
       if (response.ok) {
         const result = await response.json();
@@ -108,7 +105,7 @@ function Checkout() {
   return (
     <div className="checkout-page">
       <header className="header">
-      <h1 className="company-name">
+        <h1 className="company-name">
           <Link to="/home" className="home-link">
             Trendy Treasures
           </Link>
@@ -135,7 +132,13 @@ function Checkout() {
       </header>
       <h1 className="checkout-title">Checkout</h1>
 
-  
+      <section className="order-summary">
+        <h2 className="section-title">Order Summary</h2>
+        <p>
+          <strong>Order Number:</strong> {orderDetails.orderNumber}
+        </p>
+      </section>
+
       <section className="shipping-address">
         <h2 className="section-title">Shipping Address</h2>
         <div className="address-details">
@@ -146,7 +149,6 @@ function Checkout() {
           <p><strong>Postal Code:</strong> {orderDetails.address_id[0].postalCode}</p>
         </div>
       </section>
-
 
       <section className="review-order-items">
         <h2 className="section-title">Review Order Items</h2>
@@ -170,24 +172,21 @@ function Checkout() {
         </div>
       </section>
 
-
       <section className="order-total">
         <h2 className="section-title">Order Total</h2>
         <div className="order-total-item">
-            <span>Total:</span>
-            <strong>${orderDetails.total.toFixed(2)}</strong>
+          <span>Total:</span>
+          <strong>${orderDetails.total.toFixed(2)}</strong>
         </div>
         <div className="order-total-item">
-            <span>Order Date:</span>
-            <strong>{new Date(orderDetails.createdAt).toDateString()}</strong>
+          <span>Order Date:</span>
+          <strong>{new Date(orderDetails.createdAt).toDateString()}</strong>
         </div>
         <div className="order-total-item">
-            <span>Expected Delivery Date:</span>
-            <strong>{calculateExpectedDeliveryDate(orderDetails.createdAt)}</strong>
+          <span>Expected Delivery Date:</span>
+          <strong>{calculateExpectedDeliveryDate(orderDetails.createdAt)}</strong>
         </div>
-    </section>
-
-
+      </section>
 
       <div className="checkout-actions">
         <button className="proceed-to-pay" onClick={() => navigate('/payment')}>
@@ -199,3 +198,4 @@ function Checkout() {
 }
 
 export default Checkout;
+

@@ -9,12 +9,20 @@ function UserManagement() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem('AdminToken');
+    handleSuccess('Logged out successfully');
+    setTimeout(() => {
+        navigate('/admin/login');
+    }, 1000);
+};
+
   const fetchUsers = async () => {
     setLoading(true);
     try {
       const response = await fetch('http://localhost:7000/api/user/admin/users/get', {
         headers: {
-          Authorization: localStorage.getItem('AdminToken'),
+          'Authorization': localStorage.getItem('AdminToken'),
         },
       });
 
@@ -23,6 +31,9 @@ function UserManagement() {
         setUsers(data || []);
       } else {
         const errorData = await response.json();
+        if (errorData.message.toLowerCase().includes('token has expired')){
+          handleLogout();
+        }
         handleError(errorData.message || 'Failed to fetch users');
       }
     } catch (error) {

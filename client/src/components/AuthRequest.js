@@ -19,7 +19,7 @@ function RequestAuthorization() {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('AuthToken');
+        localStorage.removeItem('AdminToken');
         handleSuccess('Logged out successfully');
         setTimeout(() => {
             navigate('/admin/login');
@@ -54,6 +54,13 @@ function RequestAuthorization() {
 
         window.location.href = `http://localhost:5000/auth/client/login?callbackUrl=${callbackUrl}&client_id=${encodeURIComponent(clientId)}`;
 
+        }
+        else{
+
+            const errorData = await response.json();
+            if (errorData.message.toLowerCase().includes('token has expired')){
+                handleLogout();
+              }
         }
     };
 

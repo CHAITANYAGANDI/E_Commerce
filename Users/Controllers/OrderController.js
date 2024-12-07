@@ -1,4 +1,5 @@
 const OrderModel = require('../Models/Order'); 
+const crypto = require('crypto');
 
 const getOrderItems = async (req, res) => {
   try {
@@ -31,11 +32,15 @@ const postOrderDetails = async (req, res) => {
 
     const addressIds = userAddress.map(addr => addr._id);
 
+    const orderNumber = crypto.randomInt(10000000, 100000000);
+
     const orderDetails = {
+        orderNumber:orderNumber,
         userId: userId,
         items_id: itemIds,     
         address_id: addressIds, 
-        total: total
+        total: total,
+        createdAt: new Date()
       };
   
       

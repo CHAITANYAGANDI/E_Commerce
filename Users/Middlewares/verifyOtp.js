@@ -38,7 +38,7 @@ const verifyOtp = async (req, res, next) => {
                 _id: user._id
             },
             process.env.JWT_SECRET,
-            { expiresIn: '1h' }
+            { expiresIn: '1m' }
         );
 
         res.status(200).json({

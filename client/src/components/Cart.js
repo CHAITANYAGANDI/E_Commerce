@@ -93,6 +93,11 @@ function Cart() {
         calculateSubtotal(result.cartItems);
       } else {
         const errorData = await response.json();
+        
+        if (errorData.message.toLowerCase().includes('token has expired')){
+          handleLogout();
+        }
+
         handleError(errorData.message || 'Failed to fetch cart items.');
       }
     } catch (err) {
